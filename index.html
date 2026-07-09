@@ -17,7 +17,7 @@
   <div class="layout">
 
     <form class="inputs-card" id="inputs-form" autocomplete="off">
-      <h2 class="card-title">Your numbers</h2>
+      <h2 class="card-title">Your investment</h2>
 
       <label class="field">
         <span class="field-label">Starting amount</span>
@@ -28,18 +28,17 @@
       </label>
 
       <label class="field">
-        <span class="field-label">Contribution</span>
+        <span class="field-label">Monthly contribution</span>
         <div class="field-input">
           <span class="prefix">₱</span>
           <input type="number" id="contribution" min="0" step="10" value="0" inputmode="decimal" />
         </div>
       </label>
-      <p class="field-hint" id="contribution-hint">Added each month, right before interest is applied.</p>
 
       <label class="field">
         <span class="field-label">Annual interest rate</span>
         <div class="field-input">
-          <input type="number" id="rate" min="0" step="0.1" value="7" inputmode="decimal" />
+          <input type="number" id="rate" min="0" step="1" value="7" inputmode="decimal" />
           <span class="suffix">%</span>
         </div>
       </label>
@@ -60,7 +59,7 @@
       <label class="field">
         <span class="field-label">Years to grow</span>
         <div class="field-input">
-          <input type="number" id="years" min="0" max="60" step="1" value="0" inputmode="numeric" />
+          <input type="number" id="years" min="0" max="60" step="1" value="40" inputmode="numeric" />
         </div>
       </label>
 
@@ -135,10 +134,6 @@
     </div>
 
   </div>
-
-  <footer class="app-footer">
-    <p>Estimates only &mdash; actual returns vary. Interest compounds each period; contributions are added before interest is applied.</p>
-  </footer>
 
 </div>
 
