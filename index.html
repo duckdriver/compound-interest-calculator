@@ -22,10 +22,19 @@
       <label class="field">
         <span class="field-label">Starting amount</span>
         <div class="field-input">
-          <span class="prefix">$</span>
+          <span class="prefix">₱</span>
           <input type="number" id="principal" min="0" step="100" value="1000" inputmode="decimal" />
         </div>
       </label>
+
+      <label class="field">
+        <span class="field-label">Monthly contribution</span>
+        <div class="field-input">
+          <span class="prefix">₱</span>
+          <input type="number" id="contribution" min="0" step="10" value="100" inputmode="decimal" />
+        </div>
+      </label>
+      <p class="field-hint">Added each month, right before interest is applied.</p>
 
       <label class="field">
         <span class="field-label">Annual interest rate</span>
@@ -36,33 +45,11 @@
       </label>
 
       <label class="field">
-        <span class="field-label">Compounding frequency</span>
-        <div class="field-input">
-          <select id="frequency">
-            <option value="1">Annually</option>
-            <option value="2">Semi-annually</option>
-            <option value="4">Quarterly</option>
-            <option value="12" selected>Monthly</option>
-            <option value="365">Daily</option>
-          </select>
-        </div>
-      </label>
-
-      <label class="field">
         <span class="field-label">Years to grow</span>
         <div class="field-input">
           <input type="number" id="years" min="1" max="60" step="1" value="20" inputmode="numeric" />
         </div>
       </label>
-
-      <label class="field">
-        <span class="field-label">Contribution per period</span>
-        <div class="field-input">
-          <span class="prefix">$</span>
-          <input type="number" id="contribution" min="0" step="10" value="100" inputmode="decimal" />
-        </div>
-      </label>
-      <p class="field-hint" id="contribution-hint">Added each month, right before interest is applied.</p>
 
     </form>
 
