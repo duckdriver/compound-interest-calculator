@@ -28,19 +28,32 @@
       </label>
 
       <label class="field">
-        <span class="field-label">Monthly contribution</span>
+        <span class="field-label">Contribution</span>
         <div class="field-input">
           <span class="prefix">₱</span>
           <input type="number" id="contribution" min="0" step="10" value="100" inputmode="decimal" />
         </div>
       </label>
-      <p class="field-hint">Added each month, right before interest is applied.</p>
+      <p class="field-hint" id="contribution-hint">Added each month, right before interest is applied.</p>
 
       <label class="field">
         <span class="field-label">Annual interest rate</span>
         <div class="field-input">
           <input type="number" id="rate" min="0" step="0.1" value="7" inputmode="decimal" />
           <span class="suffix">%</span>
+        </div>
+      </label>
+
+      <label class="field">
+        <span class="field-label">Compounding frequency</span>
+        <div class="field-input">
+          <select id="frequency">
+            <option value="1">Annually</option>
+            <option value="2">Semi-annually</option>
+            <option value="4">Quarterly</option>
+            <option value="12" selected>Monthly</option>
+            <option value="365">Daily</option>
+          </select>
         </div>
       </label>
 

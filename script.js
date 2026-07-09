@@ -6,11 +6,12 @@
   const inputs = {
     principal: el("principal"),
     rate: el("rate"),
+    frequency: el("frequency"),
     years: el("years"),
     contribution: el("contribution"),
   };
 
-  const COMPOUNDING_PERIODS_PER_YEAR = 12;
+  const periodNouns = { "1": "year", "2": "half-year", "4": "quarter", "12": "month", "365": "day" };
 
   const currencyFull = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -278,9 +279,12 @@
   function update() {
     const principal = Math.max(0, parseFloat(inputs.principal.value) || 0);
     const rate = Math.max(0, parseFloat(inputs.rate.value) || 0);
-    const n = COMPOUNDING_PERIODS_PER_YEAR;
+    const n = parseInt(inputs.frequency.value, 10);
     const years = Math.min(60, Math.max(1, parseInt(inputs.years.value, 10) || 1));
     const contribution = Math.max(0, parseFloat(inputs.contribution.value) || 0);
+
+    el("contribution-hint").textContent =
+      `Added each ${periodNouns[String(n)]}, right before interest is applied.`;
 
     const schedule = computeSchedule(principal, rate, n, years, contribution);
     const last = schedule[schedule.length - 1];
