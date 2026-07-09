@@ -130,10 +130,36 @@ body {
   margin: -10px 0 0;
 }
 
+.compound-btn {
+  width: 100%;
+  margin-top: 4px;
+  background: var(--series-1);
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.compound-btn:hover {
+  filter: brightness(1.08);
+}
+
+.compound-btn:active {
+  filter: brightness(0.95);
+}
+
 .results {
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.results[hidden] {
+  display: none;
 }
 
 .stat-tiles {

@@ -280,7 +280,7 @@
     const principal = Math.max(0, parseFloat(inputs.principal.value) || 0);
     const rate = Math.max(0, parseFloat(inputs.rate.value) || 0);
     const n = parseInt(inputs.frequency.value, 10);
-    const years = Math.min(60, Math.max(1, parseInt(inputs.years.value, 10) || 1));
+    const years = Math.min(60, Math.max(0, parseInt(inputs.years.value, 10) || 0));
     const contribution = Math.max(0, parseFloat(inputs.contribution.value) || 0);
 
     el("contribution-hint").textContent =
@@ -298,6 +298,14 @@
   }
 
   Object.values(inputs).forEach((input) => input.addEventListener("input", update));
+
+  const results = el("results");
+  const compoundBtn = el("compound-btn");
+  compoundBtn.addEventListener("click", () => {
+    results.hidden = false;
+    update();
+    results.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   const toggleBtn = el("table-toggle");
   const tableWrap = el("table-wrap");

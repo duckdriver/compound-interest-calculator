@@ -23,7 +23,7 @@
         <span class="field-label">Starting amount</span>
         <div class="field-input">
           <span class="prefix">₱</span>
-          <input type="number" id="principal" min="0" step="100" value="1000" inputmode="decimal" />
+          <input type="number" id="principal" min="0" step="100" value="0" inputmode="decimal" />
         </div>
       </label>
 
@@ -31,7 +31,7 @@
         <span class="field-label">Contribution</span>
         <div class="field-input">
           <span class="prefix">₱</span>
-          <input type="number" id="contribution" min="0" step="10" value="100" inputmode="decimal" />
+          <input type="number" id="contribution" min="0" step="10" value="0" inputmode="decimal" />
         </div>
       </label>
       <p class="field-hint" id="contribution-hint">Added each month, right before interest is applied.</p>
@@ -60,13 +60,15 @@
       <label class="field">
         <span class="field-label">Years to grow</span>
         <div class="field-input">
-          <input type="number" id="years" min="1" max="60" step="1" value="20" inputmode="numeric" />
+          <input type="number" id="years" min="0" max="60" step="1" value="0" inputmode="numeric" />
         </div>
       </label>
 
+      <button class="compound-btn" id="compound-btn" type="button">Compound it.</button>
+
     </form>
 
-    <div class="results">
+    <div class="results" id="results" hidden>
 
       <div class="stat-tiles">
         <div class="stat-tile hero">
