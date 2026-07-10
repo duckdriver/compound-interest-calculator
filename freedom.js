@@ -10,8 +10,6 @@
   };
 
   const freedomNumberStat = el("stat-freedom-number");
-  const monthlyInvestmentTile = el("monthly-investment-tile");
-  const explainerCard = el("explainer-card");
   const results = el("results");
 
   const currencyFull = new Intl.NumberFormat("en-US", {
@@ -42,17 +40,37 @@
     });
   }
 
-  formatWithCommas(inputs.targetIncome, () => {
-    const income = parseAmount(inputs.targetIncome);
-    freedomNumberStat.value = numberOnly.format(Math.round(income * 300));
-    sizeToContent(freedomNumberStat);
-  });
+  function displayResults(freedomNumber) {
+    const rate = Math.max(0, parseFloat(inputs.rate.value) || 0);
+    const years = Math.max(1, parseInt(inputs.years.value, 10) || 1);
 
-  formatWithCommas(freedomNumberStat, () => {
+    const i = rate / 100 / 12;
+    const n = years * 12;
+    const growthFactor = Math.pow(1 + i, n);
+    const annuityFactor = i > 0 ? ((growthFactor - 1) / i) * (1 + i) : n;
+    const requiredMonthly = freedomNumber / annuityFactor;
+    const targetIncome = (freedomNumber * 0.04) / 12;
+
+    el("stat-required-monthly").textContent = currencyFull.format(requiredMonthly);
+    el("explainer").textContent = `Invest ${currencyFull.format(requiredMonthly)} a month for ${years} years at ${rate}% and you'll have ${currencyFull.format(freedomNumber)} — enough to pay you ${currencyFull.format(targetIncome)} a month forever under the 4% rule.`;
+  }
+
+  function calculateFromIncome() {
+    const income = parseAmount(inputs.targetIncome);
+    const freedomNumber = income * 300;
+    freedomNumberStat.value = numberOnly.format(Math.round(freedomNumber));
+    sizeToContent(freedomNumberStat);
+    displayResults(freedomNumber);
+  }
+
+  function calculateFromFreedomNumber() {
     const freedomNumber = parseAmount(freedomNumberStat);
     inputs.targetIncome.value = Math.round((freedomNumber * 0.04) / 12).toLocaleString("en-US");
-  });
+    displayResults(freedomNumber);
+  }
 
+  formatWithCommas(inputs.targetIncome, calculateFromIncome);
+  formatWithCommas(freedomNumberStat, calculateFromFreedomNumber);
   sizeToContent(freedomNumberStat);
 
   document.querySelectorAll(".stepper-btn").forEach((btn) => {
@@ -66,31 +84,10 @@
     });
   });
 
-  function calculate() {
-    const targetIncome = parseAmount(inputs.targetIncome);
-    const rate = Math.max(0, parseFloat(inputs.rate.value) || 0);
-    const years = Math.max(1, parseInt(inputs.years.value, 10) || 1);
-
-    const freedomNumber = (targetIncome * 12) / 0.04;
-    const i = rate / 100 / 12;
-    const n = years * 12;
-    const growthFactor = Math.pow(1 + i, n);
-    const annuityFactor = i > 0 ? ((growthFactor - 1) / i) * (1 + i) : n;
-    const requiredMonthly = freedomNumber / annuityFactor;
-
-    freedomNumberStat.value = numberOnly.format(Math.round(freedomNumber));
-    sizeToContent(freedomNumberStat);
-    el("stat-required-monthly").textContent = currencyFull.format(requiredMonthly);
-
-    el("explainer").textContent = `Invest ${currencyFull.format(requiredMonthly)} a month for ${years} years at ${rate}% and you'll have ${currencyFull.format(freedomNumber)} — enough to pay you ${currencyFull.format(targetIncome)} a month forever under the 4% rule.`;
-
-    monthlyInvestmentTile.hidden = false;
-    explainerCard.hidden = false;
-  }
-
   el("inputs-form").addEventListener("submit", (evt) => {
     evt.preventDefault();
-    calculate();
+    results.hidden = false;
+    calculateFromIncome();
     results.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 })();
