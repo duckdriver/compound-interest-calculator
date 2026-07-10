@@ -70,19 +70,6 @@ body {
   gap: 20px;
 }
 
-@media (min-width: 760px) {
-  .freedom-layout {
-    display: grid;
-    grid-template-columns: 420px 1fr;
-    align-items: start;
-    gap: 20px;
-  }
-
-  .freedom-layout .inputs-card {
-    margin: 0;
-  }
-}
-
 .card-title {
   font-size: 15px;
   font-weight: 600;
