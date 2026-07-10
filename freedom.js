@@ -26,6 +26,10 @@
     return Math.max(0, parseFloat(input.value.replace(/,/g, "")) || 0);
   }
 
+  function sizeToContent(input) {
+    input.style.width = Math.max(1, input.value.length) + "ch";
+  }
+
   function formatWithCommas(input, onChange) {
     input.addEventListener("input", () => {
       const digitsFromEnd = input.value.length - input.selectionStart;
@@ -33,6 +37,7 @@
       input.value = digits === "" ? "" : Number(digits).toLocaleString("en-US");
       const pos = Math.max(0, input.value.length - digitsFromEnd);
       input.setSelectionRange(pos, pos);
+      sizeToContent(input);
       if (onChange) onChange();
     });
   }
@@ -40,12 +45,15 @@
   formatWithCommas(inputs.targetIncome, () => {
     const income = parseAmount(inputs.targetIncome);
     freedomNumberStat.value = numberOnly.format(Math.round(income * 300));
+    sizeToContent(freedomNumberStat);
   });
 
   formatWithCommas(freedomNumberStat, () => {
     const freedomNumber = parseAmount(freedomNumberStat);
     inputs.targetIncome.value = Math.round((freedomNumber * 0.04) / 12).toLocaleString("en-US");
   });
+
+  sizeToContent(freedomNumberStat);
 
   document.querySelectorAll(".stepper-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -71,6 +79,7 @@
     const requiredMonthly = freedomNumber / annuityFactor;
 
     freedomNumberStat.value = numberOnly.format(Math.round(freedomNumber));
+    sizeToContent(freedomNumberStat);
     el("stat-required-monthly").textContent = currencyFull.format(requiredMonthly);
 
     el("explainer").textContent = `Invest ${currencyFull.format(requiredMonthly)} a month for ${years} years at ${rate}% and you'll have ${currencyFull.format(freedomNumber)} — enough to pay you ${currencyFull.format(targetIncome)} a month forever under the 4% rule.`;

@@ -381,7 +381,7 @@ body {
   color: var(--text-primary);
   font-family: inherit;
   padding: 0;
-  width: 11ch;
+  width: 2ch;
 }
 
 .stat-value-input:focus {
