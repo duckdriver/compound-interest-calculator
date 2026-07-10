@@ -23,7 +23,7 @@
         <span class="field-label">Starting amount</span>
         <div class="field-input">
           <span class="prefix">₱</span>
-          <input type="number" id="principal" min="0" step="100" value="0" inputmode="decimal" />
+          <input type="text" id="principal" value="0" inputmode="decimal" />
         </div>
       </label>
 
@@ -31,7 +31,7 @@
         <span class="field-label">Monthly contribution</span>
         <div class="field-input">
           <span class="prefix">₱</span>
-          <input type="number" id="contribution" min="0" step="10" value="0" inputmode="decimal" />
+          <input type="text" id="contribution" value="0" inputmode="decimal" />
         </div>
       </label>
 
@@ -63,7 +63,7 @@
         </div>
       </label>
 
-      <button class="compound-btn" id="compound-btn" type="button">Compound it.</button>
+      <button class="compound-btn" id="compound-btn" type="button">Compound it</button>
 
     </form>
 
@@ -95,24 +95,30 @@
 
         <div class="chart-wrap">
           <svg id="chart" viewBox="0 0 800 360" preserveAspectRatio="none" role="img" aria-label="Balance growth over time, split into contributions and interest earned"></svg>
-          <div class="tooltip" id="tooltip" hidden>
-            <div class="tooltip-year" id="tooltip-year"></div>
-            <div class="tooltip-row">
-              <span class="tooltip-key" data-series="2"></span>
-              <span class="tooltip-label">Interest earned</span>
-              <span class="tooltip-value" id="tooltip-interest"></span>
-            </div>
-            <div class="tooltip-row">
-              <span class="tooltip-key" data-series="1"></span>
-              <span class="tooltip-label">Contributions</span>
-              <span class="tooltip-value" id="tooltip-contrib"></span>
-            </div>
-            <div class="tooltip-row tooltip-total">
-              <span class="tooltip-label">Balance</span>
-              <span class="tooltip-value" id="tooltip-balance"></span>
-            </div>
+        </div>
+
+        <div class="point-panel" id="point-panel">
+          <div class="point-year" id="tooltip-year"></div>
+          <div class="tooltip-row">
+            <span class="tooltip-key" data-series="1"></span>
+            <span class="tooltip-label">Total invested</span>
+            <span class="tooltip-value" id="tooltip-contrib"></span>
+          </div>
+          <div class="tooltip-row">
+            <span class="tooltip-key" data-series="2"></span>
+            <span class="tooltip-label">Interest earned</span>
+            <span class="tooltip-value" id="tooltip-interest"></span>
+          </div>
+          <div class="tooltip-row tooltip-total">
+            <span class="tooltip-label">Balance</span>
+            <span class="tooltip-value" id="tooltip-balance"></span>
           </div>
         </div>
+
+        <blockquote class="quote">
+          <p>&ldquo;Compound interest is the eighth wonder of the world. He who understands it, earns it&hellip; he who doesn&rsquo;t&hellip; pays it.&rdquo;</p>
+          <cite>&mdash; Albert Einstein</cite>
+        </blockquote>
 
         <button class="table-toggle" id="table-toggle" type="button" aria-expanded="false">Show year-by-year table</button>
 

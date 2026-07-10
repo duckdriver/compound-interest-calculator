@@ -96,7 +96,6 @@
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
 
-  const tooltip = el("tooltip");
   const tooltipYear = el("tooltip-year");
   const tooltipContrib = el("tooltip-contrib");
   const tooltipInterest = el("tooltip-interest");
@@ -175,6 +174,12 @@
     });
     svg.appendChild(svgEl("path", { class: "line-2", d: dLine2 }));
 
+    // permanent yearly markers on both lines
+    schedule.forEach((pt) => {
+      svg.appendChild(svgEl("circle", { cx: x(pt.year), cy: y(pt.contrib), r: 3, class: "marker-1" }));
+      svg.appendChild(svgEl("circle", { cx: x(pt.year), cy: y(pt.balance), r: 3, class: "marker-2" }));
+    });
+
     // hover layer
     const crosshair = svgEl("line", { class: "crosshair", x1: 0, x2: 0, y1: M.top, y2: M.top + plotH, visibility: "hidden" });
     svg.appendChild(crosshair);
@@ -199,11 +204,11 @@
     });
     svg.appendChild(overlay);
 
-    let hoverIndex = schedule.length - 1;
+    let selectedIndex = schedule.length - 1;
 
     function showAt(index) {
       index = Math.max(0, Math.min(schedule.length - 1, index));
-      hoverIndex = index;
+      selectedIndex = index;
       const pt = schedule[index];
       const px = x(pt.year);
 
@@ -221,37 +226,24 @@
       tooltipContrib.textContent = currencyFull.format(pt.contrib);
       tooltipInterest.textContent = currencyFull.format(pt.interest);
       tooltipBalance.textContent = currencyFull.format(pt.balance);
-
-      tooltip.hidden = false;
-      const containerWidth = svg.getBoundingClientRect().width || W;
-      const scale = containerWidth / W;
-      let left = px * scale + 12;
-      const tooltipWidth = 190;
-      if (left + tooltipWidth > containerWidth) left = px * scale - tooltipWidth - 12;
-      tooltip.style.left = left + "px";
     }
 
-    function hide() {
-      crosshair.setAttribute("visibility", "hidden");
-      [dotRing1, dot1, dotRing2, dot2].forEach((n) => n.setAttribute("visibility", "hidden"));
-      tooltip.hidden = true;
-    }
-
-    overlay.addEventListener("pointermove", (evt) => {
+    function nearestIndexAt(clientX) {
       const rect = svg.getBoundingClientRect();
-      const relX = ((evt.clientX - rect.left) / rect.width) * W;
+      const relX = ((clientX - rect.left) / rect.width) * W;
       const yearAtPointer = maxYear === 0 ? 0 : ((relX - M.left) / plotW) * maxYear;
-      const nearest = schedule.reduce((best, pt, i) =>
+      return schedule.reduce((best, pt, i) =>
         Math.abs(pt.year - yearAtPointer) < Math.abs(schedule[best].year - yearAtPointer) ? i : best, 0);
-      showAt(nearest);
-    });
-    overlay.addEventListener("pointerleave", hide);
-    overlay.addEventListener("focus", () => showAt(hoverIndex));
-    overlay.addEventListener("blur", hide);
+    }
+
+    overlay.addEventListener("pointerdown", (evt) => showAt(nearestIndexAt(evt.clientX)));
+    overlay.addEventListener("pointermove", (evt) => showAt(nearestIndexAt(evt.clientX)));
     overlay.addEventListener("keydown", (evt) => {
-      if (evt.key === "ArrowRight") { showAt(hoverIndex + 1); evt.preventDefault(); }
-      if (evt.key === "ArrowLeft") { showAt(hoverIndex - 1); evt.preventDefault(); }
+      if (evt.key === "ArrowRight") { showAt(selectedIndex + 1); evt.preventDefault(); }
+      if (evt.key === "ArrowLeft") { showAt(selectedIndex - 1); evt.preventDefault(); }
     });
+
+    showAt(selectedIndex);
   }
 
   function renderTable(schedule) {
@@ -274,12 +266,16 @@
     });
   }
 
+  function parseAmount(input) {
+    return Math.max(0, parseFloat(input.value.replace(/,/g, "")) || 0);
+  }
+
   function update() {
-    const principal = Math.max(0, parseFloat(inputs.principal.value) || 0);
+    const principal = parseAmount(inputs.principal);
     const rate = Math.max(0, parseFloat(inputs.rate.value) || 0);
     const n = parseInt(inputs.frequency.value, 10);
     const years = Math.min(60, Math.max(0, parseInt(inputs.years.value, 10) || 0));
-    const contribution = Math.max(0, parseFloat(inputs.contribution.value) || 0);
+    const contribution = parseAmount(inputs.contribution);
 
     const schedule = computeSchedule(principal, rate, n, years, contribution);
     const last = schedule[schedule.length - 1];
@@ -291,6 +287,18 @@
     render(schedule);
     renderTable(schedule);
   }
+
+  function formatWithCommas(input) {
+    input.addEventListener("input", () => {
+      const digitsFromEnd = input.value.length - input.selectionStart;
+      const digits = input.value.replace(/[^\d]/g, "");
+      input.value = digits === "" ? "" : Number(digits).toLocaleString("en-US");
+      const pos = Math.max(0, input.value.length - digitsFromEnd);
+      input.setSelectionRange(pos, pos);
+    });
+  }
+  formatWithCommas(inputs.principal);
+  formatWithCommas(inputs.contribution);
 
   Object.values(inputs).forEach((input) => input.addEventListener("input", update));
 

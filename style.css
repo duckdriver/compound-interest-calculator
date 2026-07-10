@@ -270,21 +270,19 @@ body {
 .dot-ring { fill: var(--surface-1); pointer-events: none; }
 .dot-1 { fill: var(--series-1); pointer-events: none; }
 .dot-2 { fill: var(--series-2); pointer-events: none; }
+.marker-1 { fill: var(--surface-1); stroke: var(--series-1); stroke-width: 1.5; pointer-events: none; }
+.marker-2 { fill: var(--surface-1); stroke: var(--series-2); stroke-width: 1.5; pointer-events: none; }
 
-.tooltip {
-  position: absolute;
-  top: 8px;
-  background: var(--surface-1);
+.point-panel {
+  margin-top: 14px;
+  background: var(--page);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 10px 12px;
+  padding: 12px 14px;
   font-size: 13px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  pointer-events: none;
-  min-width: 160px;
 }
 
-.tooltip-year {
+.point-year {
   font-weight: 600;
   margin-bottom: 6px;
   color: var(--text-primary);
@@ -312,6 +310,27 @@ body {
   border-top: 1px solid var(--gridline);
   margin-top: 4px;
   padding-top: 6px;
+}
+
+.quote {
+  margin: 18px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--gridline);
+  text-align: center;
+}
+
+.quote p {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.quote cite {
+  font-size: 13px;
+  font-style: normal;
+  color: var(--text-muted);
 }
 
 .table-toggle {
