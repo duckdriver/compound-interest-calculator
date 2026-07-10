@@ -26,8 +26,8 @@
           <span class="prefix">₱</span>
           <input type="text" id="target-income" value="0" inputmode="decimal" />
           <div class="stepper">
-            <button type="button" class="stepper-btn" data-target="target-income" data-dir="1" aria-label="Increase by 1,000" tabindex="-1">▲</button>
-            <button type="button" class="stepper-btn" data-target="target-income" data-dir="-1" aria-label="Decrease by 1,000" tabindex="-1">▼</button>
+            <button type="button" class="stepper-btn" data-target="target-income" data-step="10" data-dir="1" aria-label="Increase by 10" tabindex="-1">▲</button>
+            <button type="button" class="stepper-btn" data-target="target-income" data-step="10" data-dir="-1" aria-label="Decrease by 10" tabindex="-1">▼</button>
           </div>
         </div>
       </label>
@@ -43,7 +43,7 @@
       <label class="field">
         <span class="field-label">Years until retirement</span>
         <div class="field-input">
-          <input type="number" id="years" min="0" max="60" step="10" value="40" inputmode="numeric" />
+          <input type="number" id="years" min="1" max="60" step="1" value="40" inputmode="numeric" />
         </div>
       </label>
 

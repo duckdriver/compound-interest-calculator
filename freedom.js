@@ -33,8 +33,9 @@
   document.querySelectorAll(".stepper-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const input = el(btn.dataset.target);
+      const step = Number(btn.dataset.step) || 1000;
       const current = parseAmount(input);
-      const next = Math.max(0, current + 1000 * Number(btn.dataset.dir));
+      const next = Math.max(0, current + step * Number(btn.dataset.dir));
       input.value = next.toLocaleString("en-US");
     });
   });
