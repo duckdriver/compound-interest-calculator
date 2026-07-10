@@ -71,7 +71,7 @@ body {
 }
 
 @media (min-width: 760px) {
-  .freedom-layout.revealed {
+  .freedom-layout {
     display: grid;
     grid-template-columns: 420px 420px;
     grid-template-areas:
@@ -83,25 +83,25 @@ body {
     margin: 0 auto;
   }
 
-  .freedom-layout.revealed .inputs-card {
+  .freedom-layout .inputs-card {
     grid-area: form;
     margin: 0;
   }
 
-  .freedom-layout.revealed #results {
+  .freedom-layout #results {
     display: contents;
   }
 
-  .freedom-layout.revealed .stat-tiles {
+  .freedom-layout .stat-tiles {
     grid-area: stats;
     align-self: stretch;
   }
 
-  .freedom-layout.revealed .chart-card {
+  .freedom-layout .chart-card {
     grid-area: explain;
   }
 
-  .freedom-layout.revealed .stat-tile {
+  .freedom-layout .stat-tile {
     text-align: left;
     align-items: flex-start;
   }
@@ -363,6 +363,30 @@ body {
 .stat-tile.hero .stat-value {
   font-size: 34px;
   color: var(--text-primary);
+}
+
+.stat-value-edit {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.stat-value-edit .prefix {
+  color: var(--text-muted);
+  font-size: 22px;
+}
+
+.stat-value-input {
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  padding: 0;
+  width: 11ch;
+}
+
+.stat-value-input:focus {
+  outline: none;
 }
 
 .chart-header {

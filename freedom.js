@@ -5,16 +5,19 @@
 
   const inputs = {
     targetIncome: el("target-income"),
-    freedomNumberInput: el("freedom-number-input"),
     rate: el("rate"),
     years: el("years"),
   };
+
+  const freedomNumberStat = el("stat-freedom-number");
 
   const currencyFull = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "PHP",
     maximumFractionDigits: 0,
   });
+
+  const numberOnly = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
   function parseAmount(input) {
     return Math.max(0, parseFloat(input.value.replace(/,/g, "")) || 0);
@@ -30,7 +33,6 @@
     });
   }
   formatWithCommas(inputs.targetIncome);
-  formatWithCommas(inputs.freedomNumberInput);
 
   document.querySelectorAll(".stepper-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -55,38 +57,35 @@
     const annuityFactor = i > 0 ? ((growthFactor - 1) / i) * (1 + i) : n;
     const requiredMonthly = freedomNumber / annuityFactor;
 
-    el("stat-freedom-number").textContent = currencyFull.format(freedomNumber);
+    freedomNumberStat.value = numberOnly.format(Math.round(freedomNumber));
     el("stat-required-monthly").textContent = currencyFull.format(requiredMonthly);
 
     el("explainer").textContent = `Invest ${currencyFull.format(requiredMonthly)} a month for ${years} years at ${rate}% and you'll have ${currencyFull.format(freedomNumber)} — enough to pay you ${currencyFull.format(targetIncome)} a month forever under the 4% rule.`;
   }
 
   const results = el("results");
-  const freedomLayout = el("freedom-layout");
 
-  function reveal() {
-    results.hidden = false;
-    freedomLayout.classList.add("revealed");
-  }
+  inputs.targetIncome.addEventListener("input", calculate);
+  inputs.rate.addEventListener("input", calculate);
+  inputs.years.addEventListener("input", calculate);
 
   el("inputs-form").addEventListener("submit", (evt) => {
     evt.preventDefault();
-    reveal();
     calculate();
     results.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  inputs.targetIncome.addEventListener("input", () => {
-    const income = parseAmount(inputs.targetIncome);
-    inputs.freedomNumberInput.value = Math.round(income * 300).toLocaleString("en-US");
-    reveal();
+  freedomNumberStat.addEventListener("input", () => {
+    const digitsFromEnd = freedomNumberStat.value.length - freedomNumberStat.selectionStart;
+    const digits = freedomNumberStat.value.replace(/[^\d]/g, "");
+    freedomNumberStat.value = digits === "" ? "" : Number(digits).toLocaleString("en-US");
+    const pos = Math.max(0, freedomNumberStat.value.length - digitsFromEnd);
+    freedomNumberStat.setSelectionRange(pos, pos);
+
+    const freedomNumber = Math.max(0, parseFloat(freedomNumberStat.value.replace(/,/g, "")) || 0);
+    inputs.targetIncome.value = Math.round((freedomNumber * 0.04) / 12).toLocaleString("en-US");
     calculate();
   });
 
-  inputs.freedomNumberInput.addEventListener("input", () => {
-    const freedomNumber = parseAmount(inputs.freedomNumberInput);
-    inputs.targetIncome.value = Math.round((freedomNumber * 0.04) / 12).toLocaleString("en-US");
-    reveal();
-    calculate();
-  });
+  calculate();
 })();
