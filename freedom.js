@@ -25,8 +25,12 @@
     return Math.max(0, parseFloat(input.value.replace(/,/g, "")) || 0);
   }
 
+  const measureCtx = document.createElement("canvas").getContext("2d");
   function sizeToContent(input) {
-    input.style.width = Math.max(1, input.value.length) + "ch";
+    const cs = getComputedStyle(input);
+    measureCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    const width = measureCtx.measureText(input.value || "0").width;
+    input.style.width = Math.ceil(width) + 2 + "px";
   }
 
   function formatWithCommas(input, onChange) {
