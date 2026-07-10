@@ -274,6 +274,7 @@
   const revealValue = el("stat-passive-income");
   const revealHint = el("reveal-hint");
   const revealContent = el("freedom-reveal-content");
+  const freedomCopy = el("freedom-copy");
   let passiveIncomeValue = 0;
   let revealed = false;
 
@@ -283,6 +284,7 @@
     revealValue.textContent = "Tap to reveal";
     revealHint.hidden = false;
     revealContent.hidden = true;
+    freedomCopy.hidden = true;
   }
 
   function revealPassiveIncome() {
@@ -291,6 +293,7 @@
     revealTile.classList.add("revealed");
     revealHint.hidden = true;
     revealContent.hidden = false;
+    freedomCopy.hidden = false;
     const duration = 700;
     const start = performance.now();
     function frame(now) {
