@@ -294,6 +294,7 @@
     revealHint.hidden = true;
     revealContent.hidden = false;
     freedomCopy.hidden = false;
+    revealTile.scrollIntoView({ behavior: "smooth", block: "center" });
     const duration = 700;
     const start = performance.now();
     function frame(now) {

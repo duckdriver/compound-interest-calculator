@@ -76,7 +76,7 @@ body {
     grid-template-columns: 420px 1fr;
     grid-template-areas:
       "form stats"
-      "form explain";
+      "explain explain";
     align-items: start;
     gap: 20px;
   }
@@ -95,13 +95,21 @@ body {
     align-self: stretch;
   }
 
-  .freedom-layout.revealed .chart-card {
+  .freedom-layout.revealed #explainer {
     grid-area: explain;
+    white-space: nowrap;
+    overflow-x: auto;
+    text-align: center;
   }
 }
 
 .freedom-layout .stat-tiles {
   grid-template-columns: 1fr;
+}
+
+.freedom-layout .stat-tile {
+  text-align: center;
+  align-items: center;
 }
 
 .card-title {
@@ -245,6 +253,12 @@ body {
   font-size: 14px;
   line-height: 1.5;
   margin: 8px 0 18px;
+}
+
+.freedom-explainer {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .reveal-zone {

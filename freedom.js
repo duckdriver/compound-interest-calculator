@@ -59,10 +59,12 @@
   }
 
   const results = el("results");
+  const explainer = el("explainer");
   const freedomLayout = el("freedom-layout");
   el("inputs-form").addEventListener("submit", (evt) => {
     evt.preventDefault();
     results.hidden = false;
+    explainer.hidden = false;
     freedomLayout.classList.add("revealed");
     calculate();
     results.scrollIntoView({ behavior: "smooth", block: "start" });
