@@ -101,7 +101,7 @@ body {
 }
 
 .freedom-layout .stat-tiles {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
 }
 
 .card-title {
@@ -271,14 +271,21 @@ body {
   display: block;
   width: 100%;
   text-align: center;
-  font-size: 30px;
+  font-size: 34px;
   font-weight: 600;
   font-variant-numeric: proportional-nums;
   color: var(--text-muted);
 }
 
 .reveal-zone.revealed .reveal-value {
+  font-size: 52px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--series-2), #f5c542);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: var(--text-primary);
+  filter: drop-shadow(0 0 18px rgba(27, 175, 122, 0.35));
   animation: reveal-pop 0.4s ease;
 }
 
