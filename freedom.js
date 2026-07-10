@@ -5,6 +5,7 @@
 
   const inputs = {
     targetIncome: el("target-income"),
+    freedomNumberInput: el("freedom-number-input"),
     rate: el("rate"),
     years: el("years"),
   };
@@ -29,6 +30,7 @@
     });
   }
   formatWithCommas(inputs.targetIncome);
+  formatWithCommas(inputs.freedomNumberInput);
 
   document.querySelectorAll(".stepper-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -37,6 +39,7 @@
       const current = parseAmount(input);
       const next = Math.max(0, current + step * Number(btn.dataset.dir));
       input.value = next.toLocaleString("en-US");
+      input.dispatchEvent(new Event("input", { bubbles: true }));
     });
   });
 
@@ -60,11 +63,30 @@
 
   const results = el("results");
   const freedomLayout = el("freedom-layout");
-  el("inputs-form").addEventListener("submit", (evt) => {
-    evt.preventDefault();
+
+  function reveal() {
     results.hidden = false;
     freedomLayout.classList.add("revealed");
+  }
+
+  el("inputs-form").addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    reveal();
     calculate();
     results.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  inputs.targetIncome.addEventListener("input", () => {
+    const income = parseAmount(inputs.targetIncome);
+    inputs.freedomNumberInput.value = Math.round(income * 300).toLocaleString("en-US");
+    reveal();
+    calculate();
+  });
+
+  inputs.freedomNumberInput.addEventListener("input", () => {
+    const freedomNumber = parseAmount(inputs.freedomNumberInput);
+    inputs.targetIncome.value = Math.round((freedomNumber * 0.04) / 12).toLocaleString("en-US");
+    reveal();
+    calculate();
   });
 })();

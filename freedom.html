@@ -33,6 +33,18 @@
       </label>
 
       <label class="field">
+        <span class="field-label">Or type your freedom number directly</span>
+        <div class="field-input">
+          <span class="prefix">₱</span>
+          <input type="text" id="freedom-number-input" value="0" inputmode="decimal" />
+          <div class="stepper">
+            <button type="button" class="stepper-btn" data-target="freedom-number-input" data-step="100000" data-dir="1" aria-label="Increase by 100,000" tabindex="-1">▲</button>
+            <button type="button" class="stepper-btn" data-target="freedom-number-input" data-step="100000" data-dir="-1" aria-label="Decrease by 100,000" tabindex="-1">▼</button>
+          </div>
+        </div>
+      </label>
+
+      <label class="field">
         <span class="field-label">Annual interest rate</span>
         <div class="field-input">
           <input type="number" id="rate" min="0" step="1" value="7" inputmode="decimal" />
