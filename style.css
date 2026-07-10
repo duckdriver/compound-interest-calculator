@@ -73,12 +73,14 @@ body {
 @media (min-width: 760px) {
   .freedom-layout.revealed {
     display: grid;
-    grid-template-columns: 420px 1fr;
+    grid-template-columns: 420px 420px;
     grid-template-areas:
       "form stats"
       "explain explain";
     align-items: start;
     gap: 20px;
+    max-width: 860px;
+    margin: 0 auto;
   }
 
   .freedom-layout.revealed .inputs-card {
