@@ -249,7 +249,7 @@
   function renderTable(schedule) {
     const body = el("data-table-body");
     body.innerHTML = "";
-    schedule.forEach((pt) => {
+    schedule.slice(1).forEach((pt) => {
       const tr = document.createElement("tr");
       const cells = [
         "Year " + pt.year,
