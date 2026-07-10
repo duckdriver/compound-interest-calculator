@@ -273,6 +273,7 @@
   const revealTile = el("reveal-tile");
   const revealValue = el("stat-passive-income");
   const revealHint = el("reveal-hint");
+  const revealContent = el("freedom-reveal-content");
   let passiveIncomeValue = 0;
   let revealed = false;
 
@@ -281,6 +282,7 @@
     revealTile.classList.remove("revealed");
     revealValue.textContent = "Tap to reveal";
     revealHint.hidden = false;
+    revealContent.hidden = true;
   }
 
   function revealPassiveIncome() {
@@ -288,6 +290,7 @@
     revealed = true;
     revealTile.classList.add("revealed");
     revealHint.hidden = true;
+    revealContent.hidden = false;
     const duration = 700;
     const start = performance.now();
     function frame(now) {
