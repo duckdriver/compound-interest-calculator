@@ -100,11 +100,6 @@ body {
   .freedom-layout .chart-card {
     grid-area: explain;
   }
-
-  .freedom-layout .stat-tile {
-    text-align: left;
-    align-items: flex-start;
-  }
 }
 
 .freedom-layout .stat-tiles {
@@ -347,6 +342,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.stat-tile[hidden] {
+  display: none;
 }
 
 .stat-label {

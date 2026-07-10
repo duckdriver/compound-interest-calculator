@@ -10,6 +10,9 @@
   };
 
   const freedomNumberStat = el("stat-freedom-number");
+  const monthlyInvestmentTile = el("monthly-investment-tile");
+  const explainerCard = el("explainer-card");
+  const results = el("results");
 
   const currencyFull = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -23,16 +26,26 @@
     return Math.max(0, parseFloat(input.value.replace(/,/g, "")) || 0);
   }
 
-  function formatWithCommas(input) {
+  function formatWithCommas(input, onChange) {
     input.addEventListener("input", () => {
       const digitsFromEnd = input.value.length - input.selectionStart;
       const digits = input.value.replace(/[^\d]/g, "");
       input.value = digits === "" ? "" : Number(digits).toLocaleString("en-US");
       const pos = Math.max(0, input.value.length - digitsFromEnd);
       input.setSelectionRange(pos, pos);
+      if (onChange) onChange();
     });
   }
-  formatWithCommas(inputs.targetIncome);
+
+  formatWithCommas(inputs.targetIncome, () => {
+    const income = parseAmount(inputs.targetIncome);
+    freedomNumberStat.value = numberOnly.format(Math.round(income * 300));
+  });
+
+  formatWithCommas(freedomNumberStat, () => {
+    const freedomNumber = parseAmount(freedomNumberStat);
+    inputs.targetIncome.value = Math.round((freedomNumber * 0.04) / 12).toLocaleString("en-US");
+  });
 
   document.querySelectorAll(".stepper-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -61,31 +74,14 @@
     el("stat-required-monthly").textContent = currencyFull.format(requiredMonthly);
 
     el("explainer").textContent = `Invest ${currencyFull.format(requiredMonthly)} a month for ${years} years at ${rate}% and you'll have ${currencyFull.format(freedomNumber)} — enough to pay you ${currencyFull.format(targetIncome)} a month forever under the 4% rule.`;
+
+    monthlyInvestmentTile.hidden = false;
+    explainerCard.hidden = false;
   }
-
-  const results = el("results");
-
-  inputs.targetIncome.addEventListener("input", calculate);
-  inputs.rate.addEventListener("input", calculate);
-  inputs.years.addEventListener("input", calculate);
 
   el("inputs-form").addEventListener("submit", (evt) => {
     evt.preventDefault();
     calculate();
     results.scrollIntoView({ behavior: "smooth", block: "start" });
   });
-
-  freedomNumberStat.addEventListener("input", () => {
-    const digitsFromEnd = freedomNumberStat.value.length - freedomNumberStat.selectionStart;
-    const digits = freedomNumberStat.value.replace(/[^\d]/g, "");
-    freedomNumberStat.value = digits === "" ? "" : Number(digits).toLocaleString("en-US");
-    const pos = Math.max(0, freedomNumberStat.value.length - digitsFromEnd);
-    freedomNumberStat.setSelectionRange(pos, pos);
-
-    const freedomNumber = Math.max(0, parseFloat(freedomNumberStat.value.replace(/,/g, "")) || 0);
-    inputs.targetIncome.value = Math.round((freedomNumber * 0.04) / 12).toLocaleString("en-US");
-    calculate();
-  });
-
-  calculate();
 })();
