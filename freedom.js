@@ -5,7 +5,6 @@
 
   const inputs = {
     targetIncome: el("target-income"),
-    principal: el("principal"),
     rate: el("rate"),
     years: el("years"),
   };
@@ -30,7 +29,6 @@
     });
   }
   formatWithCommas(inputs.targetIncome);
-  formatWithCommas(inputs.principal);
 
   document.querySelectorAll(".stepper-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -43,7 +41,6 @@
 
   function calculate() {
     const targetIncome = parseAmount(inputs.targetIncome);
-    const principal = parseAmount(inputs.principal);
     const rate = Math.max(0, parseFloat(inputs.rate.value) || 0);
     const years = Math.max(1, parseInt(inputs.years.value, 10) || 1);
 
@@ -51,17 +48,13 @@
     const i = rate / 100 / 12;
     const n = years * 12;
     const growthFactor = Math.pow(1 + i, n);
-    const futureValueOfPrincipal = principal * growthFactor;
     const annuityFactor = i > 0 ? ((growthFactor - 1) / i) * (1 + i) : n;
-    const remaining = freedomNumber - futureValueOfPrincipal;
-    const requiredMonthly = remaining > 0 ? remaining / annuityFactor : 0;
+    const requiredMonthly = freedomNumber / annuityFactor;
 
     el("stat-freedom-number").textContent = currencyFull.format(freedomNumber);
     el("stat-required-monthly").textContent = currencyFull.format(requiredMonthly);
 
-    el("explainer").textContent = requiredMonthly > 0
-      ? `Invest ${currencyFull.format(requiredMonthly)} a month for ${years} years at ${rate}% and you'll have ${currencyFull.format(freedomNumber)} — enough to pay you ${currencyFull.format(targetIncome)} a month forever under the 4% rule.`
-      : `Your starting amount alone grows past ${currencyFull.format(freedomNumber)} in ${years} years at ${rate}% — you don't need any monthly contribution to hit this goal.`;
+    el("explainer").textContent = `Invest ${currencyFull.format(requiredMonthly)} a month for ${years} years at ${rate}% and you'll have ${currencyFull.format(freedomNumber)} — enough to pay you ${currencyFull.format(targetIncome)} a month forever under the 4% rule.`;
   }
 
   const results = el("results");
