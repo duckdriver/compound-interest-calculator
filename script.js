@@ -270,6 +270,37 @@
     return Math.max(0, parseFloat(input.value.replace(/,/g, "")) || 0);
   }
 
+  const revealTile = el("reveal-tile");
+  const revealValue = el("stat-passive-income");
+  const revealHint = el("reveal-hint");
+  let passiveIncomeValue = 0;
+  let revealed = false;
+
+  function resetReveal() {
+    revealed = false;
+    revealTile.classList.remove("revealed");
+    revealValue.textContent = "Tap to reveal";
+    revealHint.hidden = false;
+  }
+
+  function revealPassiveIncome() {
+    if (revealed) return;
+    revealed = true;
+    revealTile.classList.add("revealed");
+    revealHint.hidden = true;
+    const duration = 700;
+    const start = performance.now();
+    function frame(now) {
+      const progress = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      revealValue.textContent = currencyFull.format(passiveIncomeValue * eased);
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  revealTile.addEventListener("click", revealPassiveIncome);
+
   function update() {
     const principal = parseAmount(inputs.principal);
     const rate = Math.max(0, parseFloat(inputs.rate.value) || 0);
@@ -283,7 +314,8 @@
     el("stat-balance").textContent = currencyFull.format(last.balance);
     el("stat-contributed").textContent = currencyFull.format(last.contrib);
     el("stat-interest").textContent = currencyFull.format(last.interest);
-    el("stat-passive-income").textContent = currencyFull.format((last.balance * 0.04) / 12);
+    passiveIncomeValue = (last.balance * 0.04) / 12;
+    resetReveal();
 
     render(schedule);
     renderTable(schedule);

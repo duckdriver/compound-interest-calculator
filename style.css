@@ -213,16 +213,59 @@ body {
   margin: 0 0 16px;
 }
 
-.freedom-stat {
+.reveal-tile {
+  background: var(--page);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 18px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 6px;
-  margin-bottom: 18px;
+  cursor: pointer;
+  transition: border-color 0.2s;
 }
 
-.freedom-stat .stat-value {
+.reveal-tile:hover {
+  border-color: var(--series-1);
+}
+
+.reveal-tile.revealed {
+  cursor: default;
+}
+
+.reveal-tile.revealed:hover {
+  border-color: var(--border);
+}
+
+.reveal-value {
   font-size: 30px;
   font-weight: 600;
+  font-variant-numeric: proportional-nums;
+  color: var(--text-muted);
+}
+
+.reveal-tile.revealed .reveal-value {
+  color: var(--text-primary);
+  animation: reveal-pop 0.4s ease;
+}
+
+.reveal-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  animation: reveal-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes reveal-pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes reveal-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
 }
 
 .results {
@@ -418,6 +461,26 @@ body {
   overflow-y: auto;
   border: 1px solid var(--border);
   border-radius: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--baseline) transparent;
+}
+
+.table-wrap::-webkit-scrollbar {
+  width: 9px;
+}
+
+.table-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.table-wrap::-webkit-scrollbar-thumb {
+  background: var(--baseline);
+  border-radius: 5px;
+  border: 2px solid var(--surface-1);
+}
+
+.table-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 table {
