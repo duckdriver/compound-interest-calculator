@@ -92,7 +92,7 @@
   const svg = el("chart");
   const SVG_NS = "http://www.w3.org/2000/svg";
   const M = { left: 60, right: 14, top: 14, bottom: 28 };
-  const W = 800, H = 360;
+  const W = 800, H = 480;
   const plotW = W - M.left - M.right;
   const plotH = H - M.top - M.bottom;
 
@@ -283,6 +283,7 @@
     el("stat-balance").textContent = currencyFull.format(last.balance);
     el("stat-contributed").textContent = currencyFull.format(last.contrib);
     el("stat-interest").textContent = currencyFull.format(last.interest);
+    el("stat-passive-income").textContent = currencyFull.format((last.balance * 0.04) / 12);
 
     render(schedule);
     renderTable(schedule);
@@ -299,6 +300,16 @@
   }
   formatWithCommas(inputs.principal);
   formatWithCommas(inputs.contribution);
+
+  document.querySelectorAll(".stepper-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const input = el(btn.dataset.target);
+      const current = parseAmount(input);
+      const next = Math.max(0, current + 1000 * Number(btn.dataset.dir));
+      input.value = next.toLocaleString("en-US");
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+  });
 
   Object.values(inputs).forEach((input) => input.addEventListener("input", update));
 

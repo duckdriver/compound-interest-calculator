@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Freedom Number Calculator</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+
+  <header class="app-header">
+    <a class="back-link" href="index.html">&larr; Back to calculator</a>
+    <h1>Freedom Number Calculator</h1>
+    <p class="subtitle">Work backwards from the retirement income you want to the monthly investment that gets you there, using the 4% rule.</p>
+  </header>
+
+  <div class="layout">
+
+    <form class="inputs-card" id="inputs-form" autocomplete="off">
+      <h2 class="card-title">Your target</h2>
+
+      <label class="field">
+        <span class="field-label">Desired monthly passive income</span>
+        <div class="field-input">
+          <span class="prefix">₱</span>
+          <input type="text" id="target-income" value="0" inputmode="decimal" />
+          <div class="stepper">
+            <button type="button" class="stepper-btn" data-target="target-income" data-dir="1" aria-label="Increase by 1,000">▲</button>
+            <button type="button" class="stepper-btn" data-target="target-income" data-dir="-1" aria-label="Decrease by 1,000">▼</button>
+          </div>
+        </div>
+      </label>
+
+      <label class="field">
+        <span class="field-label">Starting amount</span>
+        <div class="field-input">
+          <span class="prefix">₱</span>
+          <input type="text" id="principal" value="0" inputmode="decimal" />
+          <div class="stepper">
+            <button type="button" class="stepper-btn" data-target="principal" data-dir="1" aria-label="Increase by 1,000">▲</button>
+            <button type="button" class="stepper-btn" data-target="principal" data-dir="-1" aria-label="Decrease by 1,000">▼</button>
+          </div>
+        </div>
+      </label>
+
+      <label class="field">
+        <span class="field-label">Annual interest rate</span>
+        <div class="field-input">
+          <input type="number" id="rate" min="0" step="1" value="7" inputmode="decimal" />
+          <span class="suffix">%</span>
+        </div>
+      </label>
+
+      <label class="field">
+        <span class="field-label">Years until retirement</span>
+        <div class="field-input">
+          <input type="number" id="years" min="1" max="60" step="1" value="40" inputmode="numeric" />
+        </div>
+      </label>
+
+      <button class="compound-btn" id="calc-btn" type="button">Calculate</button>
+
+    </form>
+
+    <div class="results" id="results" hidden>
+
+      <div class="stat-tiles">
+        <div class="stat-tile hero">
+          <span class="stat-label">Required monthly investment</span>
+          <span class="stat-value" id="stat-required-monthly">₱0</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-label">Your freedom number</span>
+          <span class="stat-value" id="stat-freedom-number">₱0</span>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <p class="freedom-copy" id="explainer"></p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="freedom.js"></script>
+</body>
+</html>

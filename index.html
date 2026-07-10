@@ -24,6 +24,10 @@
         <div class="field-input">
           <span class="prefix">₱</span>
           <input type="text" id="principal" value="0" inputmode="decimal" />
+          <div class="stepper">
+            <button type="button" class="stepper-btn" data-target="principal" data-dir="1" aria-label="Increase by 1,000">▲</button>
+            <button type="button" class="stepper-btn" data-target="principal" data-dir="-1" aria-label="Decrease by 1,000">▼</button>
+          </div>
         </div>
       </label>
 
@@ -32,6 +36,10 @@
         <div class="field-input">
           <span class="prefix">₱</span>
           <input type="text" id="contribution" value="0" inputmode="decimal" />
+          <div class="stepper">
+            <button type="button" class="stepper-btn" data-target="contribution" data-dir="1" aria-label="Increase by 1,000">▲</button>
+            <button type="button" class="stepper-btn" data-target="contribution" data-dir="-1" aria-label="Decrease by 1,000">▼</button>
+          </div>
         </div>
       </label>
 
@@ -63,7 +71,7 @@
         </div>
       </label>
 
-      <button class="compound-btn" id="compound-btn" type="button">Compound it</button>
+      <button class="compound-btn" id="compound-btn" type="button">Compound it!</button>
 
     </form>
 
@@ -94,7 +102,7 @@
         </div>
 
         <div class="chart-wrap">
-          <svg id="chart" viewBox="0 0 800 360" preserveAspectRatio="none" role="img" aria-label="Balance growth over time, split into contributions and interest earned"></svg>
+          <svg id="chart" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Balance growth over time, split into contributions and interest earned"></svg>
         </div>
 
         <div class="point-panel" id="point-panel">
@@ -135,6 +143,16 @@
             <tbody id="data-table-body"></tbody>
           </table>
         </div>
+      </div>
+
+      <div class="freedom-card viz-root">
+        <h2 class="card-title">Your freedom number</h2>
+        <p class="freedom-copy">Using the 4% rule, here's about how much passive income your final balance could pay you every month in retirement &mdash; without ever touching the principal.</p>
+        <div class="freedom-stat">
+          <span class="stat-label">Monthly passive income (4% rule)</span>
+          <span class="stat-value" id="stat-passive-income">₱0</span>
+        </div>
+        <a class="compound-btn freedom-btn" href="freedom.html">Calculate freedom number</a>
       </div>
 
     </div>
