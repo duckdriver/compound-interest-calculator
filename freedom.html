@@ -15,7 +15,7 @@
     <p class="subtitle">Work backwards from the retirement income you want to the monthly investment that gets you there, using the 4% rule.</p>
   </header>
 
-  <div class="layout">
+  <div class="layout freedom-layout" id="freedom-layout">
 
     <form class="inputs-card" id="inputs-form" autocomplete="off">
       <h2 class="card-title">Your target</h2>
@@ -26,8 +26,8 @@
           <span class="prefix">₱</span>
           <input type="text" id="target-income" value="0" inputmode="decimal" />
           <div class="stepper">
-            <button type="button" class="stepper-btn" data-target="target-income" data-dir="1" aria-label="Increase by 1,000">▲</button>
-            <button type="button" class="stepper-btn" data-target="target-income" data-dir="-1" aria-label="Decrease by 1,000">▼</button>
+            <button type="button" class="stepper-btn" data-target="target-income" data-dir="1" aria-label="Increase by 1,000" tabindex="-1">▲</button>
+            <button type="button" class="stepper-btn" data-target="target-income" data-dir="-1" aria-label="Decrease by 1,000" tabindex="-1">▼</button>
           </div>
         </div>
       </label>
@@ -47,7 +47,7 @@
         </div>
       </label>
 
-      <button class="compound-btn" id="calc-btn" type="button">Calculate</button>
+      <button class="compound-btn" id="calc-btn" type="submit">Calculate</button>
 
     </form>
 

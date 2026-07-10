@@ -58,8 +58,11 @@
   }
 
   const results = el("results");
-  el("calc-btn").addEventListener("click", () => {
+  const freedomLayout = el("freedom-layout");
+  el("inputs-form").addEventListener("submit", (evt) => {
+    evt.preventDefault();
     results.hidden = false;
+    freedomLayout.classList.add("revealed");
     calculate();
     results.scrollIntoView({ behavior: "smooth", block: "start" });
   });

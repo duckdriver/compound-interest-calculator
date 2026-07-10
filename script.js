@@ -352,8 +352,8 @@
   Object.values(inputs).forEach((input) => input.addEventListener("input", update));
 
   const results = el("results");
-  const compoundBtn = el("compound-btn");
-  compoundBtn.addEventListener("click", () => {
+  el("inputs-form").addEventListener("submit", (evt) => {
+    evt.preventDefault();
     results.hidden = false;
     update();
     results.scrollIntoView({ behavior: "smooth", block: "start" });
