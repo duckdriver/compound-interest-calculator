@@ -11,6 +11,7 @@
 
   const freedomNumberStat = el("stat-freedom-number");
   const results = el("results");
+  const freedomLayout = el("freedom-layout");
 
   const currencyFull = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -35,7 +36,6 @@
       input.value = digits === "" ? "" : Number(digits).toLocaleString("en-US");
       const pos = Math.max(0, input.value.length - digitsFromEnd);
       input.setSelectionRange(pos, pos);
-      sizeToContent(input);
       if (onChange) onChange();
     });
   }
@@ -64,6 +64,7 @@
   }
 
   function calculateFromFreedomNumber() {
+    sizeToContent(freedomNumberStat);
     const freedomNumber = parseAmount(freedomNumberStat);
     inputs.targetIncome.value = Math.round((freedomNumber * 0.04) / 12).toLocaleString("en-US");
     displayResults(freedomNumber);
@@ -87,6 +88,7 @@
   el("inputs-form").addEventListener("submit", (evt) => {
     evt.preventDefault();
     results.hidden = false;
+    freedomLayout.classList.add("revealed");
     calculateFromIncome();
     results.scrollIntoView({ behavior: "smooth", block: "start" });
   });

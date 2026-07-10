@@ -71,7 +71,7 @@ body {
 }
 
 @media (min-width: 760px) {
-  .freedom-layout {
+  .freedom-layout.revealed {
     display: grid;
     grid-template-columns: 420px 420px;
     grid-template-areas:
@@ -83,21 +83,21 @@ body {
     margin: 0 auto;
   }
 
-  .freedom-layout .inputs-card {
+  .freedom-layout.revealed .inputs-card {
     grid-area: form;
     margin: 0;
   }
 
-  .freedom-layout #results {
+  .freedom-layout.revealed #results {
     display: contents;
   }
 
-  .freedom-layout .stat-tiles {
+  .freedom-layout.revealed .stat-tiles {
     grid-area: stats;
     align-self: stretch;
   }
 
-  .freedom-layout .chart-card {
+  .freedom-layout.revealed .chart-card {
     grid-area: explain;
   }
 }
